@@ -1,0 +1,18 @@
+[package]
+name = "tokio_interval_buffer"
+version = "0.1.0"
+authors = ["Victor 'Trangar' Koenders <victor.koenders@gmail.com>"]
+description = "Easy enum wrapper that implements all traits that the wrapped objects implement"
+homepage = "https://github.com/trangar/tokio_interval_buffer"
+repository = "https://github.com/trangar/tokio_interval_buffer"
+edition = "2018"
+license = "MIT"
+readme = "readme.md"
+
+[dependencies]
+futures = "0.1"
+tokio = "0.1"
+
+[dev-dependencies]
+irc = "0.13"
+failure = "0.1"
