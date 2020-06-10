@@ -10,7 +10,7 @@ license = "MIT"
 readme = "readme.md"
 
 [dependencies]
-futures = "0.1"
+futures = "0.3"
 tokio = "0.2"
 
 [dev-dependencies]
