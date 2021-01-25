@@ -14,5 +14,5 @@ futures = "0.3"
 tokio = "1.0"
 
 [dev-dependencies]
-irc = "0.14"
+irc = "0.15"
 failure = "0.1"
