@@ -48,7 +48,7 @@ use tokio::time::Interval;
 pub struct IntervalBuffer<Stream, Item, Error, Container: Insertable<Item> = Vec<Item>>
 where
     Stream: futures::Stream<Item = Result<Item, Error>>,
-    Error: From<tokio::time::Error>,
+    Error: From<tokio::time::error::Error>,
 {
     stream: Stream,
     timer: Interval,
@@ -91,7 +91,7 @@ impl<T> Insertable<T> for Vec<T> {
 impl<Stream, Item, Error, Container> IntervalBuffer<Stream, Item, Error, Container>
 where
     Stream: futures::Stream<Item = Result<Item, Error>>,
-    Error: From<tokio::time::Error>,
+    Error: From<tokio::time::error::Error>,
     Container: Insertable<Item>,
 {
     /// Create a new IntervalBuffer with a default container. This will simply call `new_with_container(.., .., Container::default())`. See that function for more informaiton.
@@ -135,7 +135,7 @@ impl<Stream, Item, Error, Container> futures::Stream
     for IntervalBuffer<Stream, Item, Error, Container>
 where
     Stream: futures::Stream<Item = Result<Item, Error>>,
-    Error: From<tokio::time::Error>,
+    Error: From<tokio::time::error::Error>,
     Container: Insertable<Item>,
 {
     type Item = Result<Container, Error>;
@@ -153,8 +153,8 @@ where
             }
         }
 
-        let timer = unsafe { Pin::new_unchecked(&mut inner.timer) };
-        match timer.poll_next(cx) {
+        let mut timer = unsafe { Pin::new_unchecked(&mut inner.timer) };
+        match timer.poll_tick(cx) {
             Poll::Pending => Poll::Pending,
             Poll::Ready(_) => {
                 let result = inner.buffer.return_content_and_clear();

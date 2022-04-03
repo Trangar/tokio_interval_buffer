@@ -1,24 +1,23 @@
 [package]
 name = "tokio_interval_buffer"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Victor 'Trangar' Koenders <victor.koenders@gmail.com>"]
 description = "Easy enum wrapper that implements all traits that the wrapped objects implement"
 homepage = "https://github.com/trangar/tokio_interval_buffer"
 repository = "https://github.com/trangar/tokio_interval_buffer"
-edition = "2018"
+edition = "2021"
 license = "MIT"
 readme = "readme.md"
 
 [dependencies]
 futures = "0.3"
-tokio = "1.0"
+
+[dependencies.tokio]
+version = "1.0"
+default-features = false
+features = ["time"]
 
 [dev-dependencies]
 irc = "0.15"
 failure = "0.1"
-
-[dependencies.tokio]
-version = "0.2"
-features = ["time", "rt-core"]
-
-[dev-dependencies]
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
